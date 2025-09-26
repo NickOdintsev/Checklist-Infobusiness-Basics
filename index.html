@@ -143,7 +143,7 @@ This checklist will help beginners in infobusiness conduct a complete audit, com
 <div id="offers-section" class="hidden mt-12 text-center">
     <h2 class="text-2xl font-bold mb-6 text-gray-800">Special Offer</h2>
     <p class="text-gray-600 mb-8">
-        Order a detailed audit to identify bottlenecks and receive personalized recommendations for improvement for $5 instead of <s class="text-gray-400">$25</s>.
+        Get a detailed audit to identify bottlenecks with personalized recommendations for improvement.
     </p>
 
     <div class="flex justify-center">
@@ -163,6 +163,17 @@ This checklist will help beginners in infobusiness conduct a complete audit, com
     </div>
 </div>
 
+<div id="booking-confirmation" class="hidden mt-12 p-6 bg-gray-50 rounded-lg text-center">
+<h3 class="text-xl font-bold text-gray-800 mb-4">I will contact you within 24 hours</h3>
+<div id="countdown-timer" class="text-2xl font-bold text-red-500 mb-4"></div>
+<p class="text-gray-600 mb-2">
+<span class="text-gray-800 font-bold">My contacts:</span>
+</p>
+<p class="text-gray-800">
+Email: <a href="mailto:odin.nickolay@gmail.com" class="text-blue-600 hover:underline">odin.nickolay@gmail.com</a>
+</p>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const checkboxes = document.querySelectorAll('.form-checkbox');
@@ -175,20 +186,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyAndRedirectBtn = document.getElementById('copy-and-redirect-btn');
     const detailedResultsTextarea = document.getElementById('detailed-results-textarea');
     
-    // ВАШЕ ОНОВЛЕНЕ ПОСИЛАННЯ НА UPWORK
+    // ВАШЕ ПОСИЛАННЯ НА UPWORK
     const UPWORK_PROFILE_LINK = "https://www.upwork.com/freelancers/~01140232d03037aa0e";
 
     // Функція, яка копіює результат та перенаправляє
     const copyAndRedirect = () => {
         // Копіювання вмісту textarea в буфер обміну
         detailedResultsTextarea.select();
-        // Використовуємо navigator.clipboard.writeText, якщо він підтримується, як більш сучасний метод
+        
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(detailedResultsTextarea.value).then(() => {
                 alert("Your results have been copied to the clipboard!\n\nNow you will be redirected to the Upwork chat. Please paste the results into the message to start your free recommendation.");
                 window.location.href = UPWORK_PROFILE_LINK;
             }).catch(err => {
-                console.error('Could not copy text: ', err);
                 // Застарілий метод як запасний варіант
                 document.execCommand('copy');
                 alert("Your results have been copied to the clipboard!\n\nNow you will be redirected to the Upwork chat. Please paste the results into the message to start your free recommendation.");
@@ -206,7 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Обробка результату та заповнення прихованого поля
     calculateBtn.addEventListener('click', () => {
         let score = 0;
-        // Форматуємо для вставки в чат Upwork (використовуємо прості переноси рядків \n)
         let detailedResults = "--- CHECKLIST RESULTS ---\n"; 
 
         checkboxes.forEach(checkbox => {
@@ -218,7 +227,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 score += parseInt(points);
             }
 
-            // Використовуємо \n для нових рядків
             detailedResults += `${status}: ${questionLabel}\n`;
         });
         detailedResults += `\nTOTAL SCORE: ${score} points\n--------------------------\n`;
@@ -252,7 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsSection.classList.remove('hidden');
         document.getElementById('booking-confirmation').classList.add('hidden'); 
 
-        resultsSection.scrollIntoView({ behavior: 'smooth' });
+        // ВИПРАВЛЕННЯ ПРОКРУТКИ: Прокрутка до секції результатів
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
     
     // 2. Прив'язка нової логіки до кнопки "I want a recommendation"
