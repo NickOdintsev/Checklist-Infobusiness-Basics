@@ -141,43 +141,127 @@ This checklist will help beginners in infobusiness conduct a complete audit, com
 </div>
 
 <div id="offers-section" class="hidden mt-12 text-center">
-    <h2 class="text-2xl font-bold mb-6 text-gray-800">Special Offer</h2>
-    <p class="text-gray-600 mb-8">
-        Order a detailed audit to identify "bottlenecks" and receive personalized recommendations for improvement.
-    </p>
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Special Offer</h2>
+    <p class="text-gray-600 mb-8">
+        Order a detailed audit to identify bottlenecks and receive personalized recommendations for improvement for $5 instead of <s class="text-gray-400">$25</s>.
+    </p>
 
-    <div class="flex justify-center">
-        <div class="offer-card w-full md:w-1/2">
-            <form action="https://formsubmit.co/odin.nickolay@gmail.com" method="POST" id="form-offer">
+    <div class="flex justify-center">
+        <div class="offer-card w-full md:w-1/2">
+            <a href="https://live.staticflickr.com/65535/54808787974_3fbfd23a6d_b.jpg">
+                <img src="https://live.staticflickr.com/65535/54808787974_3fbfd23a6d_b.jpg" alt="Audit Offer" class="offer-image" style="width: 300px; height: 300px;" onerror="this.onerror=null; this.src='https://placehold.co/300x300/E5E7EB/A1A1AA?text=Image+Error';">
+            </a>
 
-                <input type="hidden" name="_subject" value="НОВА ЗАЯВКА: Тріпваєр (Аудит за $5) - З Чеклиста">
-                
-                <input type="hidden" name="_next" value="https://nickodintsev.github.io/Checklist-Infobusiness-Basics/#booking-confirmation">
+            <textarea id="detailed-results-textarea" style="position: absolute; left: -9999px;" aria-hidden="true"></textarea>
+            
+            <input type="hidden" id="final-score-upwork" value="N/A">
 
-
-                <a href="https://live.staticflickr.com/65535/54808787974_3fbfd23a6d_b.jpg">
-                    <img src="https://live.staticflickr.com/65535/54808787974_3fbfd23a6d_b.jpg" alt="Audit Offer" class="offer-image" style="width: 300px; height: 300px;" onerror="this.onerror=null; this.src='https://placehold.co/300x300/E5E7EB/A1A1AA?text=Image+Error';">
-                </a>
-
-                <div class="mt-4 space-y-3 text-left">
-                    <input type="text" name="name" placeholder="Ваше Ім'я (обов'язково)" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                    <input type="email" name="email" placeholder="Ваш Email (обов'язково)" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                
-                <input type="hidden" name="Checklist Score" id="final-score-input" value="N/A">
-                <input type="hidden" name="Detailed Checklist Results" id="detailed-results-input" value="N/A">
-                <input type="hidden" name="_autoresponse" value="Дякуємо, {{name}}! Ви щойно зробили важливий крок до оптимізації вашого інфобізнесу. Ваш загальний результат: {{Checklist Score}}! Ми вже готуємо персоналізований аудит. Наш менеджер зв'яжеться з вами протягом 12 годин. Результати чеклиста: {{Detailed Checklist Results}}">
-
-
-                <button type="submit" id="book-btn-submit" class="btn btn-primary text-2xl px-8 py-3 mt-4 w-full">
-                    <s class="text-gray-400">$25</s> $5 ЗАМОВИТИ АУДИТ
-                </button>
-            </form>
-            </div>
-    </div>
+                        <button id="copy-and-redirect-btn" class="btn btn-primary text-2xl px-8 py-3 mt-4 w-full">
+                I want a recommendation
+            </button>
+            </div>
+    </div>
 </div>
 
-<div id="booking-confirmation" class="hidden mt-12 p-6 bg-gray-50 rounded-lg text-center">
-<h3 class="text-xl font-bold text-gray-800 mb-4">I will contact you within 24 hours</h3>
-<div id="countdown-timer" class="text-2xl font-bold text-red-500 mb-4"></div>
-<p class="text-gray-600 mb
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('.form-checkbox');
+    const calculateBtn = document.getElementById('calculate-btn');
+    const resultsSection = document.getElementById('results-section');
+    const totalScoreSpan = document.getElementById('total-score');
+    const verdictParagraph = document.getElementById('verdict');
+    const nextStepParagraph = document.getElementById('next-step');
+    const offersSection = document.getElementById('offers-section');
+    const copyAndRedirectBtn = document.getElementById('copy-and-redirect-btn');
+    const detailedResultsTextarea = document.getElementById('detailed-results-textarea');
+    
+    // ВАШЕ ОНОВЛЕНЕ ПОСИЛАННЯ НА UPWORK
+    const UPWORK_PROFILE_LINK = "https://www.upwork.com/freelancers/~01140232d03037aa0e";
+
+    // Функція, яка копіює результат та перенаправляє
+    const copyAndRedirect = () => {
+        // Копіювання вмісту textarea в буфер обміну
+        detailedResultsTextarea.select();
+        // Використовуємо navigator.clipboard.writeText, якщо він підтримується, як більш сучасний метод
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(detailedResultsTextarea.value).then(() => {
+                alert("Your results have been copied to the clipboard!\n\nNow you will be redirected to the Upwork chat. Please paste the results into the message to start your free recommendation.");
+                window.location.href = UPWORK_PROFILE_LINK;
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+                // Застарілий метод як запасний варіант
+                document.execCommand('copy');
+                alert("Your results have been copied to the clipboard!\n\nNow you will be redirected to the Upwork chat. Please paste the results into the message to start your free recommendation.");
+                window.location.href = UPWORK_PROFILE_LINK;
+            });
+        } else {
+             // Застарілий метод
+            document.execCommand('copy');
+            alert("Your results have been copied to the clipboard!\n\nNow you will be redirected to the Upwork chat. Please paste the results into the message to start your free recommendation.");
+            window.location.href = UPWORK_PROFILE_LINK;
+        }
+    };
+
+
+    // 1. Обробка результату та заповнення прихованого поля
+    calculateBtn.addEventListener('click', () => {
+        let score = 0;
+        // Форматуємо для вставки в чат Upwork (використовуємо прості переноси рядків \n)
+        let detailedResults = "--- CHECKLIST RESULTS ---\n"; 
+
+        checkboxes.forEach(checkbox => {
+            const questionLabel = checkbox.previousElementSibling.textContent.trim();
+            const status = checkbox.checked ? "[YES] ✅" : "[NO] ❌";
+            const points = checkbox.getAttribute('data-points');
+            
+            if (checkbox.checked) {
+                score += parseInt(points);
+            }
+
+            // Використовуємо \n для нових рядків
+            detailedResults += `${status}: ${questionLabel}\n`;
+        });
+        detailedResults += `\nTOTAL SCORE: ${score} points\n--------------------------\n`;
+
+
+        // Записуємо детальний звіт у приховане поле для копіювання
+        detailedResultsTextarea.value = detailedResults;
+
+
+        totalScoreSpan.textContent = score;
+
+        let verdict = '';
+        let nextStepHtml = '';
+
+        if (score >= 9) {
+            verdict = 'Your funnel has a strong foundation and effective automation.';
+            nextStepHtml = 'You are moving in the right direction! Consider creating new funnels or optimizing conversion at each stage.';
+            offersSection.classList.add('hidden');
+        } else if (score >= 4) {
+            verdict = 'Your funnel has potential but requires systematization and automation.';
+            nextStepHtml = 'There are significant opportunities for optimization and growth. I can help identify "bottlenecks" and build a complete system.';
+            offersSection.classList.remove('hidden');
+        } else {
+            verdict = 'Your funnel is at the initial stage. There are huge opportunities for growth.';
+            nextStepHtml = 'Currently, you are likely losing time and potential clients. Creating an effective automation system can significantly increase your profit.';
+            offersSection.classList.remove('hidden');
+        }
+
+        verdictParagraph.textContent = verdict;
+        nextStepParagraph.innerHTML = nextStepHtml;
+        resultsSection.classList.remove('hidden');
+        document.getElementById('booking-confirmation').classList.add('hidden'); 
+
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    // 2. Прив'язка нової логіки до кнопки "I want a recommendation"
+    copyAndRedirectBtn.addEventListener('click', (event) => {
+        event.preventDefault(); 
+        copyAndRedirect();
+    });
+});
+</script>
+
+</body>
+</html>
