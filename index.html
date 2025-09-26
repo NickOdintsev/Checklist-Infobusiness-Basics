@@ -165,6 +165,7 @@ This checklist will help beginners in infobusiness conduct a complete audit, com
                 </div>
                 
                 <input type="hidden" name="Checklist Score" id="final-score-input" value="N/A">
+                <input type="hidden" name="Detailed Checklist Results" id="detailed-results-input" value="N/A">
 
                 <button type="submit" id="book-btn-submit" class="btn btn-primary text-2xl px-8 py-3 mt-4 w-full">
                     <s class="text-gray-400">$25</s> $5 ЗАМОВИТИ АУДИТ
@@ -225,15 +226,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Обробка результату та заповнення прихованого поля форми
     calculateBtn.addEventListener('click', () => {
         let score = 0;
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                score += parseInt(checkbox.getAttribute('data-points'));
-            }
-        });
+        let detailedResults = "--- CHECKLIST ANSWERS ---\n";
 
-        // Записуємо результат у приховане поле форми
+        checkboxes.forEach(checkbox => {
+            // Отримуємо текст питання з попереднього елемента <label>
+            const questionLabel = checkbox.previousElementSibling.textContent.trim();
+            const status = checkbox.checked ? "[YES] ✅" : "[NO] ❌";
+            const points = checkbox.getAttribute('data-points');
+            
+            // Збираємо бали
+            if (checkbox.checked) {
+                score += parseInt(points);
+            }
+
+            // Формуємо рядок для детального звіту
+            detailedResults += `${status} (${points} points): ${questionLabel}\n`;
+        });
+        detailedResults += "--------------------------\n";
+
+
+        // 1.1. Записуємо загальний результат
         const finalScoreInput = document.getElementById('final-score-input');
         finalScoreInput.value = score + ' points';
+        
+        // 1.2. Записуємо детальний звіт (НОВЕ)
+        const detailedResultsInput = document.getElementById('detailed-results-input');
+        detailedResultsInput.value = detailedResults;
+
 
         totalScoreSpan.textContent = score;
 
