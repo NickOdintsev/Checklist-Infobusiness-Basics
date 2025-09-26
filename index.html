@@ -159,4 +159,25 @@ This checklist will help beginners in infobusiness conduct a complete audit, com
                     <img src="https://live.staticflickr.com/65535/54808787974_3fbfd23a6d_b.jpg" alt="Audit Offer" class="offer-image" style="width: 300px; height: 300px;" onerror="this.onerror=null; this.src='https://placehold.co/300x300/E5E7EB/A1A1AA?text=Image+Error';">
                 </a>
 
-                <div
+                <div class="mt-4 space-y-3 text-left">
+                    <input type="text" name="name" placeholder="Ваше Ім'я (обов'язково)" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    <input type="email" name="email" placeholder="Ваш Email (обов'язково)" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                
+                <input type="hidden" name="Checklist Score" id="final-score-input" value="N/A">
+                <input type="hidden" name="Detailed Checklist Results" id="detailed-results-input" value="N/A">
+                <input type="hidden" name="_autoresponse" value="Дякуємо, {{name}}! Ви щойно зробили важливий крок до оптимізації вашого інфобізнесу. Ваш загальний результат: {{Checklist Score}}! Ми вже готуємо персоналізований аудит. Наш менеджер зв'яжеться з вами протягом 12 годин. Результати чеклиста: {{Detailed Checklist Results}}">
+
+
+                <button type="submit" id="book-btn-submit" class="btn btn-primary text-2xl px-8 py-3 mt-4 w-full">
+                    <s class="text-gray-400">$25</s> $5 ЗАМОВИТИ АУДИТ
+                </button>
+            </form>
+            </div>
+    </div>
+</div>
+
+<div id="booking-confirmation" class="hidden mt-12 p-6 bg-gray-50 rounded-lg text-center">
+<h3 class="text-xl font-bold text-gray-800 mb-4">I will contact you within 24 hours</h3>
+<div id="countdown-timer" class="text-2xl font-bold text-red-500 mb-4"></div>
+<p class="text-gray-600 mb
